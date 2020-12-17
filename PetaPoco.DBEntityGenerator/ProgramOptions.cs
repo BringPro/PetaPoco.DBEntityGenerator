@@ -27,5 +27,8 @@ namespace PetaPoco.DBEntityGenerator
 
         [Option("outputFile", Default = "Database.cs", HelpText = "Output file name")]
         public string OutputFile { get; set; }
+
+        [Option("ignoreColumns", Default = "Id,Created,Updated", HelpText = "Ignore fields from base class")]
+        public string IgnoreColumns { get; set; } 
     }
 }

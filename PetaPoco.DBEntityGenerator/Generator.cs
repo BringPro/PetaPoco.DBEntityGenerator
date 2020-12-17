@@ -36,7 +36,7 @@
             ApplyTableConfigurations(context, tables);
 
             WriteFileStarting(context);
-            WriteRecoredClass(context);
+            //WriteRecoredClass(context);
             WriteTables(context, tables);
 
             WriteFileEnding();
@@ -358,13 +358,20 @@
             WriteLine("    public partial class {0}", tbl.ClassName);
             if (cmd.TrackModifiedColumns)
             {
-                WriteLine("        : Record<{0}>", tbl.ClassName);
+                //WriteLine("        : Record<{0}>", tbl.ClassName);
+                WriteLine("        : CoreDomainModel");
             }
             WriteLine("    {");
 
             foreach (var col in tbl.Columns.OrderBy(x => x.Name).Where(x => !x.Ignore))
             {
                 var columnParts = new List<string>();
+
+                if(!string.IsNullOrEmpty(context.Command.IgnoreColumns) && context.Command.IgnoreColumns.Contains(col.Name))
+                {
+                    continue;
+                }
+
                 if (col.Name != col.PropertyName)
                 {
                     columnParts.Add(string.Format("Name = \"{0}\"", col.Name));
@@ -397,26 +404,26 @@
                     }
                 }
 
-                if (cmd.TrackModifiedColumns)
-                {
-                    WriteLine("        public {0}{1} {2}", col.PropertyType, Helpers.CheckNullable(col), col.PropertyName);
-                    WriteLine("        {");
-                    WriteLine("            get {{ return _{0}; }}", col.PropertyName);
-                    WriteLine("            set");
-                    WriteLine("            {");
-                    WriteLine("                _{0} = value;", col.PropertyName); ;
-                    WriteLine("                MarkColumnModified(\"{0}\");", col.PropertyName); ;
-                    WriteLine("            }");
-                    WriteLine("        }");
+                //if (cmd.TrackModifiedColumns)
+                //{
+                //    WriteLine("        public {0}{1} {2}", col.PropertyType, Helpers.CheckNullable(col), col.PropertyName);
+                //    WriteLine("        {");
+                //    WriteLine("            get {{ return _{0}; }}", col.PropertyName);
+                //    WriteLine("            set");
+                //    WriteLine("            {");
+                //    WriteLine("                _{0} = value;", col.PropertyName); ;
+                //    WriteLine("                MarkColumnModified(\"{0}\");", col.PropertyName); ;
+                //    WriteLine("            }");
+                //    WriteLine("        }");
 
-                    WriteLine("");
+                //    WriteLine("");
 
-                    WriteLine("        private {0}{1} _{2};", col.PropertyType, Helpers.CheckNullable(col), col.PropertyName);
-                }
-                else
-                {
+                //    WriteLine("        private {0}{1} _{2};", col.PropertyType, Helpers.CheckNullable(col), col.PropertyName);
+                //}
+                //else
+                //{
                     WriteLine("        public {0}{1} {2} {{ get; set; }}", col.PropertyType, Helpers.CheckNullable(col), col.PropertyName);
-                }
+                //}
 
                 WriteLine("");
             }

@@ -51,7 +51,8 @@
                     ProviderName = opts.ProviderName,
                     ExplicitColumns = opts.ExplicitColumns,
                     TrackModifiedColumns = opts.TrackModifiedColumns,
-                    Namespace = opts.Namespace
+                    Namespace = opts.Namespace,
+                    IgnoreColumns = opts.IgnoreColumns
                 };
             }
 
