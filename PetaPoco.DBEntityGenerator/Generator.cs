@@ -367,7 +367,7 @@
             {
                 var columnParts = new List<string>();
 
-                if(!string.IsNullOrEmpty(context.Command.IgnoreColumns) && context.Command.IgnoreColumns.Contains(col.Name))
+                if (!string.IsNullOrEmpty(context.Command.IgnoreColumns) && context.Command.IgnoreColumns.Contains(col.Name))
                 {
                     continue;
                 }
@@ -404,26 +404,26 @@
                     }
                 }
 
-                //if (cmd.TrackModifiedColumns)
-                //{
-                //    WriteLine("        public {0}{1} {2}", col.PropertyType, Helpers.CheckNullable(col), col.PropertyName);
-                //    WriteLine("        {");
-                //    WriteLine("            get {{ return _{0}; }}", col.PropertyName);
-                //    WriteLine("            set");
-                //    WriteLine("            {");
-                //    WriteLine("                _{0} = value;", col.PropertyName); ;
-                //    WriteLine("                MarkColumnModified(\"{0}\");", col.PropertyName); ;
-                //    WriteLine("            }");
-                //    WriteLine("        }");
+                if (cmd.TrackModifiedColumns)
+                {
+                    WriteLine("        public {0}{1} {2}", col.PropertyType, Helpers.CheckNullable(col), col.PropertyName);
+                    WriteLine("        {");
+                    WriteLine("            get {{ return _{0}; }}", col.PropertyName);
+                    WriteLine("            set");
+                    WriteLine("            {");
+                    WriteLine("                _{0} = value;", col.PropertyName); ;
+                    WriteLine("                MarkColumnModified(\"{0}\");", col.PropertyName); ;
+                    WriteLine("            }");
+                    WriteLine("        }");
 
-                //    WriteLine("");
+                    WriteLine("");
 
-                //    WriteLine("        private {0}{1} _{2};", col.PropertyType, Helpers.CheckNullable(col), col.PropertyName);
-                //}
-                //else
-                //{
+                    WriteLine("        private {0}{1} _{2};", col.PropertyType, Helpers.CheckNullable(col), col.PropertyName);
+                }
+                else
+                {
                     WriteLine("        public {0}{1} {2} {{ get; set; }}", col.PropertyType, Helpers.CheckNullable(col), col.PropertyName);
-                //}
+                }
 
                 WriteLine("");
             }
