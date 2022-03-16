@@ -263,6 +263,8 @@
             WriteLine("    using System.Linq;");
             WriteLine("");
             WriteLine("    using PetaPoco;");
+            //Added dependency to library
+            WriteLine("    using Rhino.Lib.Core.Models.Domain;");
             WriteLine("");
         }
 
